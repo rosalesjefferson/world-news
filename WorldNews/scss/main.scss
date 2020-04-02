@@ -1,0 +1,209 @@
+@import 'variables';
+@import 'mixins';
+@import 'components';
+@import 'utilities';
+@import 'base';
+
+
+// const checkbox = document.querySelector('.checkbox')
+// const navItemButton = document.querySelector('.nav__item')
+// const navItemButtonAll = document.querySelectorAll('.nav__item')
+// const ul = document.querySelector('.nav__navigation-lists')
+// const header = document.querySelector('.header')
+// const latestNewsContainer = document.querySelector('.latest__news-container')
+// const listButtons = document.querySelectorAll('.categoryCountryPopular__category-item')
+// const countryButtons = document.querySelectorAll('[data-button-country]')
+// const countryCategoryNews = document.querySelectorAll('.categoryCountryPopular__news-outsideCard')
+// const trendingNewsContainer = document.querySelector('.categoryCountryPopular__popular-newsLists')
+// const loading = document.querySelector('.loader')
+// const latestNewsLoading = document.querySelector('.latestNews__loader')
+// const popularNewsLoading = document.querySelector('.popular__loader')
+// const noNews = document.querySelector('.no__news')
+// const news = new News('4e80644a92074d1984785b9ab9d44e87', `https://newsapi.org/v2/top-headlines?country=`, 'http://newsapi.org/v2/everything?domains=wsj.com,nytimes.com&apiKey=', 'http://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=')
+// const ui = new UI(listButtons, countryCategoryNews, countryButtons, latestNewsContainer, trendingNewsContainer)
+
+// // Default Value
+// let page = 1
+// let length = 5
+// let defaultCountry = 'us'
+// let defaultCategory = 'business'
+// let targetButton = '#business'
+
+// /*************************UPDATE NEWS*****************************/
+// const addNews = (data, callback, loading, className) =>{
+//         if(data){
+//             loading.className = className
+//             setTimeout(() =>{
+//                 loading.style.display = 'none'
+//                 setTimeout(() =>{
+//                     callback(data)
+//                 }, 1)
+//             }, 300)
+//         }
+// }
+// // Latest News
+// news.getLatestNews().then(data => {
+
+//     addNews(data.articles, function(returnValue){
+//         ui.latestNews(returnValue)
+//     }, latestNewsLoading, 'latestNews__loader')
+
+// }).catch(err => {
+//     console.log(err.message);
+// })
+
+// // Country Category News
+// const callNews = () =>{
+//     loading.className = noNews.classList.contains('active') ? 'loader' : 'loader active'
+//     loading.style.display = 'flex'
+//     news.getCountryCategoryNews(defaultCategory, page, defaultCountry).then(data => {
+//         addNews(data.articles, function(returnValue){
+//             ui.updateData(returnValue, targetButton, length)
+//         }, loading, 'loader')
+//     }).catch(err => {
+//         console.log(err.message);
+//     })
+// }
+// callNews()
+
+// // Popular News
+// news.getPopularNews().then(data => {
+//     // Call addNews
+//     addNews(data.articles, function(returnValue){
+//         ui.popularNews(returnValue)
+//     }, popularNewsLoading, 'popular__loader')
+// }).catch(err => {
+//     console.log(err.message);
+// })
+
+// // Add news scroll
+// window.addEventListener('scroll', () =>{
+//         const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+//         if(scrollTop + clientHeight >= scrollHeight -5){
+//             loading.className = noNews.classList.contains('active') ? 'loader' : 'loader active'
+//             loading.style.display = noNews.classList.contains('active') ? 'none' : 'flex'
+//             page++
+//             length += 5
+//             console.log(page, length);
+//             news.getCountryCategoryNews(defaultCategory, page, defaultCountry).then(data => {
+//                 if(data){
+//                     loading.className = 'loader'
+//                     setTimeout(() =>{
+//                         if(data.articles.length < 1){
+//                             noNews.className = 'no__news active'
+//                         }else{
+//                             noNews.className = 'no__news'
+//                             ui.updateData(data.articles, targetButton, length)
+//                             console.log(data.articles.length, 'Not Empty, Scrolled', page);
+//                         }
+//                     }, 500)
+//                 }
+//             }).catch(err => {
+//                 console.log(err);
+//             }) 
+//         }else{
+//             loading.className = 'loader'
+//         }
+//     })
+
+// /*************************UI*****************************/
+// // Category Buttons
+// listButtons.forEach(listButton => {
+//     listButton.addEventListener('click', () =>{
+//         loading.style.display = 'flex'
+//         console.log(listButton.innerText);
+//         ui.buttonActive(listButton) 
+//         noNews.className = 'no__news'
+//         targetButton = listButton.getAttribute('data-target')
+//         defaultCategory = targetButton.slice(1)
+//         page = 1
+//         length = 10
+//         callNews()
+//         ui.newsActive(listButton)
+//     })
+// })
+// //  Country Buttons
+// countryButtons.forEach(button => {
+//     button.addEventListener('click', (e) =>{
+//         e.preventDefault()
+//         noNews.className = 'no__news'
+//         page = 1
+//         length = 10
+//         defaultCountry = button.innerText
+//         countryCategoryNews.forEach(headline => {
+//             headline.innerHTML = ''
+//         })
+//         callNews()
+//     })
+// })
+// countryButtons.forEach(button => {
+//     button.addEventListener('click', (e) =>{
+//         e.preventDefault()
+//         ui.activeButtonCountry(button)
+//     })
+// })
+// //////Links
+// const hideShowNavLinks = () =>{
+//     if(checkbox.checked){
+//         header.style.filter = 'blur(4px) brightness(70%)'
+//         console.log('check', checkbox.checked);
+//         ul.style.display = 'flex'
+//         navItemButton.style.display = 'unset' 
+//         setTimeout(() =>{
+//             navItemButton.nextElementSibling.style.display = 'unset' 
+//             setTimeout(() =>{
+//               navItemButton.nextElementSibling.nextElementSibling.style.display = 'unset' 
+//               setTimeout(() =>{
+//                 navItemButton.nextElementSibling.nextElementSibling.nextElementSibling.style.display = 'unset' 
+//               }, 50)  
+//             }, 50)  
+//         }, 50)       
+//     }else{
+//         console.log('Uncheck', checkbox.checked);
+//         header.style.filter = 'unset'
+//         navItemButton.nextElementSibling.nextElementSibling.nextElementSibling.style.display = 'none' 
+//         setTimeout(() =>{
+//           navItemButton.nextElementSibling.nextElementSibling.style.display = 'none' 
+//           setTimeout(() =>{
+//             navItemButton.nextElementSibling.style.display = 'none' 
+//              setTimeout(() =>{
+//                navItemButton.style.display = 'none' 
+//                navItemButton.nextElementSibling.nextElementSibling.nextElementSibling.style.display = 'none' 
+//                ul.style.display = 'none'
+//              }, 50)  
+//           }, 50)  
+//         }, 50)  
+//     }
+// }
+// // remove nav links when changing the size of the screen
+// window.addEventListener('resize', () =>{
+//     if(window.outerWidth > 600){
+//         checkbox.checked = false
+//         ul.style.display = 'flex'
+//         navItemButtonAll.forEach(itemButton => {
+//             itemButton.style.display = 'unset'
+//         })
+//     }else{
+//         checkbox.checked = false
+//         ul.style.display = 'none'
+//         navItemButtonAll.forEach(itemButton => {
+//             itemButton.style.display = 'none'
+//         })
+//     }
+//     header.style.filter = 'unset'
+// })
+// // checkbox
+// checkbox.addEventListener('click', () => {
+//     hideShowNavLinks()
+// })
+
+// // Nav links
+// navItemButtonAll.forEach(itemButton => {
+//     itemButton.addEventListener('click', () => {
+//         if(window.outerWidth <= 600){
+//             checkbox.checked = false
+//             hideShowNavLinks()
+//         }
+//     })
+
+// })
